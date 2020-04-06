@@ -30,6 +30,7 @@ let alwaysDisplay = {
 
     fingerUp : () => {
         alwaysDisplay.count = 0;
+        document.querySelector('.always-display .finger-print').style.opacity = '1';
         clearInterval(interval);
     }
 }
