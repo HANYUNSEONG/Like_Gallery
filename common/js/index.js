@@ -1,21 +1,25 @@
 const alwaysDisplayWrap = document.querySelector('.always-display');
-const koDay = ['일', '월', '화', '수', '목', '금', '토'];
 const date = new Date();
+const koreanDayName = ['일', '월', '화', '수', '목', '금', '토'];
+const koDay = koreanDayName[date.getDay()];
 
 // 전체 날짜, 시간 관련
 let timeSetting = {
-    default : {
-        month : date.getMonth() + 1,
-        ddate : date.getDate(),
-        day : date.getDay(),
-        koDay : koDay[date.getDay()],
-        hours : date.getHours(),
-        minutes : date.getMinutes()
-    },
+    defaultTimeView : () => {
+        // date setting
+        let month = date.getMonth() + 1;
+        let ddate = date.getDate();
 
-    alwaysDisplayTime : () => {
-        document.querySelector('#phone .always-display .time-box .time').innerHTML = timeSetting.default.hours + ':' + timeSetting.default.minutes;
-        document.querySelector('#phone .always-display .time-box .date').innerHTML = timeSetting.default.month + '월 ' + timeSetting.default.ddate + '일 ' + timeSetting.default.koDay + '요일';;
+        // time setting
+        let hours = date.getHours();
+        let minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+
+        // alwaysDisplay Time Setting
+        document.querySelector('#phone .always-display .time-box .time').innerHTML = hours + ':' + minutes;
+        document.querySelector('#phone .always-display .time-box .date').innerHTML = month + '월 ' + ddate + '일 ' + koDay + '요일';
+
+        // Home top-bar Time Setting
+        document.querySelector('#phone #top-bar .time').innerHTML = hours + ':' + minutes;
     }
 }
 
@@ -46,8 +50,10 @@ let alwaysDisplay = {
 }
 
 window.onload = () => {
-    timeSetting.alwaysDisplayTime()
+    // start run function
+    timeSetting.defaultTimeView()
 
+    // AlwaysDisplay Event
     document.querySelector('.always-display .finger-print').addEventListener('mousedown', () => { alwaysDisplay.fingerDown() });
     document.querySelector('.always-display .finger-print').addEventListener('mouseup', () => { alwaysDisplay.fingerUp() });
 }
