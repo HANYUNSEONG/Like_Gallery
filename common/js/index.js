@@ -106,6 +106,15 @@ let Apps = {
         // 켜져있는 되어있는 앱 하나도 없으면 false
         let tabActive = document.querySelectorAll('.tab-active');
         if(tabActive.length === 0) return false;
+
+        if(tf === true)
+        {
+            document.body.style.cursor = 'pointer';
+        }
+        else
+        {
+            document.body.style.cursor = 'default';
+        }
     },
 
     // Home button event
@@ -129,6 +138,10 @@ let Apps = {
     // Back button event
     BackBtn : () => {
 
+    },
+
+    TabAppClick : () => {
+        console.log(123)
     }
 }
 
@@ -144,10 +157,12 @@ window.onload = () => {
     // Apps Event
     for(let i = 0; i < document.querySelectorAll('#main .app-wrap > div').length; i++)
     {
-        document.querySelectorAll('#main .app-wrap > div')[i].addEventListener('mousedown', (e) => { Apps.AppOpen(e) });
+        document.querySelectorAll('#main .app-wrap > div')[i].addEventListener('mousedown', (e) => { Apps.AppOpen(e); });
     }
     document.getElementById('Apps').addEventListener('mousedown', () => { Apps.dragApp(true) });
     document.getElementById('Apps').addEventListener('mouseup', () => { Apps.dragApp(false) });
+
+    for(let i = 0;)
 
     // bottom bar event
     document.querySelector('#bottom-bar div:nth-of-type(1)').addEventListener('mousedown', () => { Apps.AppTab() });
