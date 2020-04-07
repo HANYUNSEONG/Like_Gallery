@@ -278,6 +278,10 @@ button {
     overflow: hidden;
 }
 
+#Apps > #app2 {
+    background-color: wheat;
+}
+
 #Apps > .app-active {
     border-radius: 7px;
 }

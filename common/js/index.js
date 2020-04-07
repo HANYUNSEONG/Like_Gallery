@@ -35,7 +35,7 @@ let alwaysDisplay = {
         interval = setInterval(() => {
             alwaysDisplay.data.count++;
 
-            if(alwaysDisplay.data.count == 1) {
+            if(alwaysDisplay.data.count === 1) {
                 alwaysDisplayWrap.style.opacity = '0';
                 alwaysDisplayWrap.style.visibility = 'hidden';
             }
@@ -52,21 +52,50 @@ let alwaysDisplay = {
 let Apps = {
     AppOpen : (e) => {
         let AppIndex = e.target.dataset['index'];
-        if(AppIndex == undefined || AppIndex === '') return false;
+        if(AppIndex === undefined || AppIndex === '') return false;
+
+        let targetApp = document.getElementById(AppIndex);
 
         document.getElementById('Apps').style.visibility = 'visible';
-        document.getElementById(AppIndex).style.visibility = 'visible';
-        document.getElementById(AppIndex).style.opacity = '1';
-        document.getElementById(AppIndex).classList.add('app-active');
+        targetApp.style.visibility = 'visible';
+        targetApp.style.opacity = '1';
+        targetApp.classList.add('app-active');
+
+        targetApp.style.width = '100%';
+        targetApp.style.height = '100%';
     },
 
     AppTab : () => {
         let openApp = document.querySelectorAll('.app-active');
 
+        document.getElementById('Apps').style.visibility = 'visible';
         for(let i = 0; i < openApp.length; i++)
         {
             openApp[i].style.width = '75%';
-            openApp[i].style.height = '50%';
+            openApp[i].style.height = '60%';
+            openApp[i].classList.add('tab-active');
+
+            openApp[i].style.visibility = 'visible';
+            openApp[i].style.opacity = '1';
+        }
+    },
+
+    dragApp : (tf) => {
+        // 켜져있는 되어있는 앱 하나도 없으면 false
+        let tabActive = document.querySelectorAll('.tab-active');
+        if(tabActive.length === 0) return false;
+    },
+
+    HomeBtn : () => {
+        if(document.querySelectorAll('.app-active').length === 0) return false;
+
+        document.getElementById('Apps').style.visibility = 'hidden';
+        for(let i = 0; i < document.querySelectorAll('.app-active').length; i++)
+        {
+            document.querySelectorAll('.app-active')[i].style.visibility = 'hidden';
+            document.querySelectorAll('.app-active')[i].style.opacity = '0';
+            document.querySelectorAll('.app-active')[i].style.width = '75%';
+            document.querySelectorAll('.app-active')[i].style.height = '60%';
         }
     }
 }
@@ -84,7 +113,10 @@ window.onload = () => {
     {
         document.querySelectorAll('#main .app-wrap > div')[i].addEventListener('mousedown', (e) => { Apps.AppOpen(e) });
     }
+    document.getElementById('Apps').addEventListener('mousedown', () => { Apps.dragApp(true) });
+    document.getElementById('Apps').addEventListener('mouseup', () => { Apps.dragApp(false) });
 
     // bottom bar event
     document.querySelector('#bottom-bar div:nth-of-type(1)').addEventListener('mousedown', () => { Apps.AppTab() });
+    document.querySelector('#bottom-bar div:nth-of-type(2)').addEventListener('mousedown', () => { Apps.HomeBtn() });
 }
