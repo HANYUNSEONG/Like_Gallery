@@ -56,7 +56,7 @@ button {
     transition: .5s;
     background-color: #000;
     display: none;
-    z-index: 999;
+    z-index: 999999;
 }
 
 #phone .always-display .time-box {
@@ -148,6 +148,7 @@ button {
 
 #top-bar .left-box p {
     margin-left: 4px;
+    letter-spacing: -.5px;
 }
 
 #top-bar .right-box {
@@ -280,6 +281,9 @@ button {
 
 #Apps > #app2 {
     background-color: wheat;
+}
+#Apps > #app3 {
+    background-color: rgb(200, 138, 138);
 }
 
 #Apps > .app-active {

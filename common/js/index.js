@@ -1,5 +1,5 @@
 const alwaysDisplayWrap = document.querySelector('.always-display');
-const date = new Date();
+let date = new Date();
 const koreanDayName = ['일', '월', '화', '수', '목', '금', '토'];
 const koDay = koreanDayName[date.getDay()];
 
@@ -7,6 +7,7 @@ const koDay = koreanDayName[date.getDay()];
 let timeSetting = {
     defaultTimeView : () => {
         // date setting
+        date = new Date();
         let month = date.getMonth() + 1;
         let ddate = date.getDate();
 
@@ -50,33 +51,54 @@ let alwaysDisplay = {
 }
 
 let Apps = {
+    data : {
+        AppsData : []
+    },
+
     AppOpen : (e) => {
         let AppIndex = e.target.dataset['index'];
         if(AppIndex === undefined || AppIndex === '') return false;
 
         let targetApp = document.getElementById(AppIndex);
+        let targetId = targetApp.getAttribute('id');
+        if(Apps.data.AppsData.includes(targetId) == false)
+        {
+            Apps.data.AppsData.unshift(targetId);
+        }
+        else
+        {
+            let idx = Apps.data.AppsData.indexOf(targetId);
+            if(idx !== -1) Apps.data.AppsData.splice(idx, 1);
+            Apps.data.AppsData.unshift(targetId);
+        }
 
         document.getElementById('Apps').style.visibility = 'visible';
         targetApp.style.visibility = 'visible';
         targetApp.style.opacity = '1';
+
         targetApp.classList.add('app-active');
 
         targetApp.style.width = '100%';
         targetApp.style.height = '100%';
     },
 
+    // Tab button event
     AppTab : () => {
-        let openApp = document.querySelectorAll('.app-active');
+        if(Apps.data.AppsData.length === 0) return false;
 
         document.getElementById('Apps').style.visibility = 'visible';
-        for(let i = 0; i < openApp.length; i++)
-        {
-            openApp[i].style.width = '75%';
-            openApp[i].style.height = '60%';
-            openApp[i].classList.add('tab-active');
+        document.getElementById('Apps').style.backgroundColor = 'rgba(0, 0, 0, .4)';
 
-            openApp[i].style.visibility = 'visible';
-            openApp[i].style.opacity = '1';
+        for(let i = 0; i < Apps.data.AppsData.length; i++)
+        {
+            let openApp = document.querySelector('#'+Apps.data.AppsData[i]);
+            openApp.style.width = '65%';
+            openApp.style.height = '60%';
+            openApp.classList.add('tab-active');
+
+            openApp.style.visibility = 'visible';
+            openApp.style.opacity = '1';
+            openApp.style.left = (i + 1) * 70 - 20 + '%';
         }
     },
 
@@ -86,23 +108,34 @@ let Apps = {
         if(tabActive.length === 0) return false;
     },
 
+    // Home button event
     HomeBtn : () => {
         if(document.querySelectorAll('.app-active').length === 0) return false;
 
+        let app = document.querySelectorAll('.app-active');
+
         document.getElementById('Apps').style.visibility = 'hidden';
-        for(let i = 0; i < document.querySelectorAll('.app-active').length; i++)
+        for(let i = 0; i < app.length; i++)
         {
-            document.querySelectorAll('.app-active')[i].style.visibility = 'hidden';
-            document.querySelectorAll('.app-active')[i].style.opacity = '0';
-            document.querySelectorAll('.app-active')[i].style.width = '75%';
-            document.querySelectorAll('.app-active')[i].style.height = '60%';
+            app[i].style.visibility = 'hidden';
+            app[i].style.opacity = '0';
+            app[i].style.width = '75%';
+            app[i].style.height = '60%';
+            app[i].style.left = '50%';
+            app[i].classList.remove('tab-active');            
         }
+    },
+
+    // Back button event
+    BackBtn : () => {
+
     }
 }
 
 window.onload = () => {
     // start run function
-    timeSetting.defaultTimeView()
+    timeSetting.defaultTimeView();
+    setInterval(() => { timeSetting.defaultTimeView() }, 1000);
 
     // AlwaysDisplay Event
     document.querySelector('.always-display .finger-print').addEventListener('mousedown', () => { alwaysDisplay.fingerDown() });
@@ -119,4 +152,5 @@ window.onload = () => {
     // bottom bar event
     document.querySelector('#bottom-bar div:nth-of-type(1)').addEventListener('mousedown', () => { Apps.AppTab() });
     document.querySelector('#bottom-bar div:nth-of-type(2)').addEventListener('mousedown', () => { Apps.HomeBtn() });
+    document.querySelector('#bottom-bar div:nth-of-type(3)').addEventListener('mousedown', () => { Apps.BackBtn() });
 }
