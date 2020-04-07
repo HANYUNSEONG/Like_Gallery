@@ -270,11 +270,16 @@ button {
 #Apps > div {
     width: 100%;
     height: 100%;
-    background-color: skyblue;
+    background-color: rgb(48, 95, 156);
     padding: 30px 10px 40px 10px;
     transition: .5s;
     visibility: hidden;
     opacity: 0;
+    overflow: hidden;
+}
+
+#Apps > .app-active {
+    border-radius: 7px;
 }
 
 /* bottom bar */

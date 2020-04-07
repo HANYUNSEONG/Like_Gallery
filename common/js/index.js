@@ -52,7 +52,7 @@ let alwaysDisplay = {
 let Apps = {
     AppOpen : (e) => {
         let AppIndex = e.target.dataset['index'];
-        if(AppIndex == undefined) return false;
+        if(AppIndex == undefined || AppIndex === '') return false;
 
         document.getElementById('Apps').style.visibility = 'visible';
         document.getElementById(AppIndex).style.visibility = 'visible';
@@ -61,7 +61,13 @@ let Apps = {
     },
 
     AppTab : () => {
-        
+        let openApp = document.querySelectorAll('.app-active');
+
+        for(let i = 0; i < openApp.length; i++)
+        {
+            openApp[i].style.width = '75%';
+            openApp[i].style.height = '50%';
+        }
     }
 }
 
