@@ -133,6 +133,9 @@ button {
     font-size: 14px;
     color: #fff;
     padding: 6px;
+    z-index: 99999;
+    position: absolute;
+    top: 0;
 }
 
 #top-bar .left-box {
@@ -159,7 +162,7 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin: -5px 5px 0 0;
+    margin: -5px 7px 0 0;
 }
 
 #top-bar .right-box .send-bar > span {
@@ -190,6 +193,7 @@ button {
     width: 100%;
     height: calc(100% - 70px);
     padding: 15px 10px;
+    position: relative;
 }
     /* google search style */
     #main .google-search-box {
@@ -236,12 +240,42 @@ button {
         width: 100px;
         height: 100px;
         background-color: rgba(0, 0, 0, .5);
-        border-radius: 5px;
+        border-radius: 10px;
+        overflow: hidden;
+        padding: 10px;
+        color: #fff;
+        text-align: center;
+        cursor: pointer;
+        transition: .3s background-color;
+    }
+
+    #main .app-wrap > div:hover {
+        background-color: rgba(0, 0, 0, .67);
     }
 
     /* app icon style end */
 
 /* main style end */
+
+/* Apps style */
+#Apps {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 50;
+    visibility: hidden;
+}
+#Apps > div {
+    width: 100%;
+    height: 100%;
+    background-color: skyblue;
+    padding: 30px 10px 40px 10px;
+    transition: .5s;
+    visibility: hidden;
+    opacity: 0;
+}
 
 /* bottom bar */
 
@@ -251,6 +285,7 @@ button {
     background-color: rgba(0, 0, 0, .4);
     position: absolute;
     bottom: 0;
+    z-index: 9999;
 }
 
 #bottom-bar > div {
@@ -259,7 +294,7 @@ button {
     float: left;
     background-repeat: no-repeat;
     background-position: center;
-    transition: .3s;
+    transition: .3s background-color;
     cursor: pointer;
 }
 

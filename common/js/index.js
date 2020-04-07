@@ -49,6 +49,22 @@ let alwaysDisplay = {
     }
 }
 
+let Apps = {
+    AppOpen : (e) => {
+        let AppIndex = e.target.dataset['index'];
+        if(AppIndex == undefined) return false;
+
+        document.getElementById('Apps').style.visibility = 'visible';
+        document.getElementById(AppIndex).style.visibility = 'visible';
+        document.getElementById(AppIndex).style.opacity = '1';
+        document.getElementById(AppIndex).classList.add('app-active');
+    },
+
+    AppTab : () => {
+        
+    }
+}
+
 window.onload = () => {
     // start run function
     timeSetting.defaultTimeView()
@@ -56,4 +72,13 @@ window.onload = () => {
     // AlwaysDisplay Event
     document.querySelector('.always-display .finger-print').addEventListener('mousedown', () => { alwaysDisplay.fingerDown() });
     document.querySelector('.always-display .finger-print').addEventListener('mouseup', () => { alwaysDisplay.fingerUp() });
+
+    // Apps Event
+    for(let i = 0; i < document.querySelectorAll('#main .app-wrap > div').length; i++)
+    {
+        document.querySelectorAll('#main .app-wrap > div')[i].addEventListener('mousedown', (e) => { Apps.AppOpen(e) });
+    }
+
+    // bottom bar event
+    document.querySelector('#bottom-bar div:nth-of-type(1)').addEventListener('mousedown', () => { Apps.AppTab() });
 }
