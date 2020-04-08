@@ -1,4 +1,8 @@
+// Element define
 const alwaysDisplayWrap = document.querySelector('.always-display');
+const AppsEl = document.getElementById('Apps');
+
+// util
 let date = new Date();
 const koreanDayName = ['일', '월', '화', '수', '목', '금', '토'];
 const koDay = koreanDayName[date.getDay()];
@@ -52,7 +56,8 @@ let alwaysDisplay = {
 
 let Apps = {
     data : {
-        AppsData : []
+        AppsData : [],
+        tf : false
     },
 
     AppOpen : (e) => {
@@ -72,7 +77,7 @@ let Apps = {
             Apps.data.AppsData.unshift(targetId);
         }
 
-        document.getElementById('Apps').style.visibility = 'visible';
+        AppsEl.style.visibility = 'visible';
         targetApp.style.visibility = 'visible';
         targetApp.style.opacity = '1';
 
@@ -86,8 +91,9 @@ let Apps = {
     AppTab : () => {
         if(Apps.data.AppsData.length === 0) return false;
 
-        document.getElementById('Apps').style.visibility = 'visible';
-        document.getElementById('Apps').style.backgroundColor = 'rgba(0, 0, 0, .4)';
+        AppsEl.style.visibility = 'visible';
+        AppsEl.style.backgroundColor = 'rgba(0, 0, 0, .4)';
+        AppsEl.classList.add('tab-on');
 
         for(let i = 0; i < Apps.data.AppsData.length; i++)
         {
@@ -103,6 +109,7 @@ let Apps = {
     },
 
     dragApp : (tf) => {
+        Apps.data.tf = tf;
         // 켜져있는 되어있는 앱 하나도 없으면 false
         let tabActive = document.querySelectorAll('.tab-active');
         if(tabActive.length === 0) return false;
@@ -110,11 +117,18 @@ let Apps = {
         if(tf === true)
         {
             document.body.style.cursor = 'pointer';
+            document.body.style.userSelect = 'none';
         }
         else
         {
             document.body.style.cursor = 'default';
+            document.body.style.userSelect = 'auto';
         }
+    },
+
+    dragAppMove : () => {
+        if(Apps.data.tf === false || AppsEl.classList[0] !== 'tab-on') return false;
+        console.log(123)
     },
 
     // Home button event
@@ -123,7 +137,7 @@ let Apps = {
 
         let app = document.querySelectorAll('.app-active');
 
-        document.getElementById('Apps').style.visibility = 'hidden';
+        AppsEl.style.visibility = 'hidden';
         for(let i = 0; i < app.length; i++)
         {
             app[i].style.visibility = 'hidden';
@@ -141,7 +155,7 @@ let Apps = {
     },
 
     TabAppClick : () => {
-        console.log(123)
+        if(AppsEl.classList[0] !== 'tab-on') return false;
     }
 }
 
@@ -159,10 +173,15 @@ window.onload = () => {
     {
         document.querySelectorAll('#main .app-wrap > div')[i].addEventListener('mousedown', (e) => { Apps.AppOpen(e); });
     }
-    document.getElementById('Apps').addEventListener('mousedown', () => { Apps.dragApp(true) });
-    document.getElementById('Apps').addEventListener('mouseup', () => { Apps.dragApp(false) });
 
-    for(let i = 0;)
+    AppsEl.addEventListener('mousedown', () => { Apps.dragApp(true) });
+    AppsEl.addEventListener('mouseup', () => { Apps.dragApp(false) });
+    AppsEl.addEventListener('mousemove', () => { Apps.dragAppMove() });
+
+    for(let i = 0; i < document.querySelectorAll('#Apps > div').length; i++)
+    {
+        document.querySelectorAll('#Apps > div')[i].addEventListener('mousedown', () => { Apps.TabAppClick(); })
+    }
 
     // bottom bar event
     document.querySelector('#bottom-bar div:nth-of-type(1)').addEventListener('mousedown', () => { Apps.AppTab() });

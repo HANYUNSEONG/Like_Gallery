@@ -7,6 +7,11 @@
     font-family: 'Malgun Gothic';
 }
 
+::selection {
+    background-color: rgb(248, 131, 35);
+    color: #fff;
+}
+
 body {
     background-color: #f5f5f5;
     /* background-color: #2d2d2d; */
@@ -235,6 +240,7 @@ button {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
+        top: 55%;
     }
 
     #main .app-wrap > div {
