@@ -197,10 +197,12 @@ let Apps = {
         {
             document.querySelector('#'+Apps.data.AppsData[i]).style.visibility = 'hidden';
             document.querySelector('#'+Apps.data.AppsData[i]).style.opaicty = '0';
+            document.querySelector('#'+Apps.data.AppsData[i]).style.zIndex = '20';
         }
 
         e.target.style.visibility = 'visible';
         e.target.style.opaicty = '1';
+        e.target.style.zIndex = '50';
         e.target.style.width = '100%';
         e.target.style.height = '100%';
         e.target.style.left = '50%';
