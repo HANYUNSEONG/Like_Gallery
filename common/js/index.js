@@ -183,8 +183,27 @@ let Apps = {
 
     },
 
-    TabAppClick : () => {
+    TabAppClick : (e) => {
         if(AppsEl.classList[0] !== 'tab-on') return false;
+
+        AppsEl.classList.remove('tab-on');
+
+        // 클릭한 앱 첫번째로 올리기
+        let idx = Apps.data.AppsData.indexOf(e.target.getAttribute('id'));
+        if(idx !== -1) Apps.data.AppsData.splice(idx, 1);
+        Apps.data.AppsData.unshift(e.target.getAttribute('id'));
+
+        for(let i = 0; i < Apps.data.AppsData.length; i++)
+        {
+            document.querySelector('#'+Apps.data.AppsData[i]).style.visibility = 'hidden';
+            document.querySelector('#'+Apps.data.AppsData[i]).style.opaicty = '0';
+        }
+
+        e.target.style.visibility = 'visible';
+        e.target.style.opaicty = '1';
+        e.target.style.width = '100%';
+        e.target.style.height = '100%';
+        e.target.style.left = '50%';
     }
 }
 
@@ -209,7 +228,7 @@ window.onload = () => {
 
     for(let i = 0; i < document.querySelectorAll('#Apps > div').length; i++)
     {
-        document.querySelectorAll('#Apps > div')[i].addEventListener('mousedown', () => { Apps.TabAppClick(); })
+        document.querySelectorAll('#Apps > div')[i].addEventListener('dblclick', (e) => { Apps.TabAppClick(e); })
     }
 
     // bottom bar event
