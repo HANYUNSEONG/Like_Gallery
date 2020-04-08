@@ -97,6 +97,9 @@ let Apps = {
         AppsEl.style.backgroundColor = 'rgba(0, 0, 0, .4)';
         AppsEl.classList.add('tab-on');
 
+        document.querySelector('.all-app-close').style.visibility = 'visible';
+        document.querySelector('.all-app-close').style.opacity = '1';
+
         for(let i = 0; i < Apps.data.AppsData.length; i++)
         {
             let openApp = document.querySelector('#'+Apps.data.AppsData[i]);
@@ -113,8 +116,7 @@ let Apps = {
     dragApp : (tf) => {
         Apps.data.tf = tf;
         // 켜져있는 되어있는 앱 하나도 없으면 false
-        let tabActive = document.querySelectorAll('.tab-active');
-        if(tabActive.length === 0) return false;
+        if(document.getElementById('Apps').classList[0] !== 'tab-on') return false;
 
         if(tf === true)
         {
@@ -160,6 +162,26 @@ let Apps = {
         }
     },
 
+    AllAppClose : () => {
+        for(let i = 0; i < Apps.data.AppsData.length; i++)
+        {
+            let app = document.querySelector('#'+Apps.data.AppsData[i]);
+            app.style.visibility = 'hidden';
+            app.style.opacity = '0';
+            app.style.width = '75%';
+            app.style.height = '60%';
+            app.style.left = '50%';
+            app.classList.remove('tab-active');
+        }
+        AppsEl.style.visibility = 'hidden';
+        AppsEl.classList.remove('tab-on');
+
+        document.querySelector('.all-app-close').style.visibility = 'hidden';
+        document.querySelector('.all-app-close').style.opacity = '0';
+
+        Apps.data.AppsData = [];
+    },
+
     // Home button event
     HomeBtn : () => {
         if(document.querySelectorAll('.app-active').length === 0) return false;
@@ -167,6 +189,9 @@ let Apps = {
         let app = document.querySelectorAll('.app-active');
 
         AppsEl.style.visibility = 'hidden';
+        document.querySelector('.all-app-close').style.visibility = 'hidden';
+        document.querySelector('.all-app-close').style.opacity = '0';
+
         for(let i = 0; i < app.length; i++)
         {
             app[i].style.visibility = 'hidden';
@@ -210,6 +235,9 @@ let Apps = {
 }
 
 window.onload = () => {
+    // var css = "font-size:50px;font-weight:600;color:#fff;background:red;";
+    // console.log("%c%s", css, 'LIKE GALLERY');
+    
     // start run function
     timeSetting.defaultTimeView();
     setInterval(() => { timeSetting.defaultTimeView() }, 1000);
@@ -232,6 +260,9 @@ window.onload = () => {
     {
         document.querySelectorAll('#Apps > div')[i].addEventListener('dblclick', (e) => { Apps.TabAppClick(e); })
     }
+
+    // App All Close
+    document.querySelector('.all-app-close').addEventListener('mousedown', () => { Apps.AllAppClose() })
 
     // bottom bar event
     document.querySelector('#bottom-bar div:nth-of-type(1)').addEventListener('mousedown', () => { Apps.AppTab() });
