@@ -5,9 +5,9 @@ Gallery UI처럼 만들어보았습니다.
 
 ## Latest Version [ Ver 0.2 ]  
 
+### Ver 0.2
+1. 탭 구현
+
 ### Ver 0.1
 1. UI 구성
 2. Always Display
-
-### Ver 0.2
-1. 탭 구현
