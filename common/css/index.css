@@ -38,6 +38,26 @@ button {
     transform: translate(-50%, -50%);
 }
 
+.control-btn-box {
+    top: 5.5%;
+}
+
+.control-btn-box .control-btn {
+    width: 100px;
+    height: 35px;
+    border: none;
+    background-color: cornflowerblue;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: .3s background-color;
+}
+
+.control-btn-box .control-btn:hover {
+    background-color: #5680cc;
+}
+
 #phone {
     width: 380px;
     height: 750px;
@@ -60,8 +80,9 @@ button {
     height: 100%;
     transition: .5s;
     background-color: #000;
-    display: none;
     z-index: 999999;
+    visibility: hidden;
+    opacity: 0;
 }
 
 #phone .always-display .time-box {
@@ -312,7 +333,7 @@ button {
     border-radius: 20px;
     font-weight: 600;
     border: none;
-    z-index: 9999999;
+    z-index: 9999;
     background-color: rgba(0, 0, 0, .4);
     color: #fff;
     visibility: hidden;

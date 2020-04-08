@@ -43,6 +43,9 @@ let alwaysDisplay = {
             if(alwaysDisplay.data.count === 1) {
                 alwaysDisplayWrap.style.opacity = '0';
                 alwaysDisplayWrap.style.visibility = 'hidden';
+
+                clearInterval(interval);
+                alwaysDisplay.data.count = 0;
             }
         }, 1000);
     },
@@ -51,6 +54,13 @@ let alwaysDisplay = {
         alwaysDisplay.count = 0;
         document.querySelector('.always-display .finger-print').style.opacity = '1';
         clearInterval(interval);
+    },
+
+    lock : () => {
+        alwaysDisplayWrap.style.visibility = 'visible';
+        alwaysDisplayWrap.style.opacity = '1';
+
+        alwaysDisplay.data.count = 0;
     }
 }
 
@@ -225,6 +235,9 @@ let Apps = {
             document.querySelector('#'+Apps.data.AppsData[i]).style.zIndex = '20';
         }
 
+        document.querySelector('.all-app-close').style.visibility = 'hidden';
+        document.querySelector('.all-app-close').style.opacity = '0';
+
         e.target.style.visibility = 'visible';
         e.target.style.opaicty = '1';
         e.target.style.zIndex = '50';
@@ -245,6 +258,7 @@ window.onload = () => {
     // AlwaysDisplay Event
     document.querySelector('.always-display .finger-print').addEventListener('mousedown', () => { alwaysDisplay.fingerDown() });
     document.querySelector('.always-display .finger-print').addEventListener('mouseup', () => { alwaysDisplay.fingerUp() });
+    document.querySelector('.lock-btn').addEventListener('click', () => { alwaysDisplay.lock() })
 
     // Apps Event
     for(let i = 0; i < document.querySelectorAll('#main .app-wrap > div').length; i++)
