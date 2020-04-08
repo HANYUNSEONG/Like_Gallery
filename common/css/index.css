@@ -235,7 +235,7 @@ button {
     /* app icon style */
 
     #main .app-wrap {
-        width: 70%;
+        width: 60%;
         height: 50%;
         display: flex;
         flex-wrap: wrap;

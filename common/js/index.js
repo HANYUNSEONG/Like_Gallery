@@ -57,7 +57,9 @@ let alwaysDisplay = {
 let Apps = {
     data : {
         AppsData : [],
-        tf : false
+        tf : false,
+        x : 0,
+        y : 0
     },
 
     AppOpen : (e) => {
@@ -126,9 +128,36 @@ let Apps = {
         }
     },
 
-    dragAppMove : () => {
+    dragAppMove : (x, y) => {
         if(Apps.data.tf === false || AppsEl.classList[0] !== 'tab-on') return false;
-        console.log(123)
+
+        if(Apps.data.AppsData.length !== 1)
+        {
+            if(Apps.data.x > x)
+            {
+                // left                
+                Apps.dragAppMoveOn("left");
+            }
+            else if(Apps.data.x < x)
+            {
+                // right
+                Apps.dragAppMoveOn("right");
+            }
+        }
+
+        Apps.data.x = x, Apps.data.y = y;
+    },
+
+    dragAppMoveOn : (type) => {
+        let xType = type == "left" ? '-' : '+';
+
+        for(let i = 0; i < Apps.data.AppsData.length; i++)
+        {
+            let el = document.querySelector('#'+Apps.data.AppsData[i])
+            el.style.left = Number(el.style.left.split('%')[0]) + (type === "left" ? -2 : 2) + '%';
+            
+            if(el.style.left === '50%') return false;
+        }
     },
 
     // Home button event
@@ -176,7 +205,7 @@ window.onload = () => {
 
     AppsEl.addEventListener('mousedown', () => { Apps.dragApp(true) });
     AppsEl.addEventListener('mouseup', () => { Apps.dragApp(false) });
-    AppsEl.addEventListener('mousemove', () => { Apps.dragAppMove() });
+    AppsEl.addEventListener('mousemove', (e) => { Apps.dragAppMove(e.pageX, e.pageY) });
 
     for(let i = 0; i < document.querySelectorAll('#Apps > div').length; i++)
     {
