@@ -247,6 +247,12 @@ let Apps = {
     }
 }
 
+let topBar = {
+    topBarOn : () => {
+        console.log(123)
+    }
+}
+
 window.onload = () => {
     // var css = "font-size:50px;font-weight:600;color:#fff;background:red;";
     // console.log("%c%s", css, 'LIKE GALLERY');
@@ -277,6 +283,8 @@ window.onload = () => {
 
     // App All Close
     document.querySelector('.all-app-close').addEventListener('mousedown', () => { Apps.AllAppClose() })
+    
+    //
 
     // bottom bar event
     document.querySelector('#bottom-bar div:nth-of-type(1)').addEventListener('mousedown', () => { Apps.AppTab() });
