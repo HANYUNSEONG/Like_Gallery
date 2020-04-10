@@ -1,6 +1,7 @@
 // Element define
 const alwaysDisplayWrap = document.querySelector('.always-display');
 const AppsEl = document.getElementById('Apps');
+const topBar = document.getElementById('top-bar');
 
 // util
 let date = new Date();
@@ -247,9 +248,29 @@ let Apps = {
     }
 }
 
-let topBar = {
-    topBarOn : () => {
-        console.log(123)
+let topBarFn = {
+    data : {
+        tf : false,
+        y : 0
+    },
+
+    topBarOnOff : (tf) => {
+        if(tf)
+        {
+            topBar.classList.add("topActive");
+        }
+        // else
+        // {
+        //     topBar.classList.remove("topActive");
+        // }
+
+        topBarFn.data.tf = tf;
+    },
+
+    topBarMove : (y, target) => {
+        if(!topBarFn.data.tf) return false;
+
+        topBarFn.data.y = y;
     }
 }
 
@@ -284,7 +305,10 @@ window.onload = () => {
     // App All Close
     document.querySelector('.all-app-close').addEventListener('mousedown', () => { Apps.AllAppClose() })
     
-    //
+    // top bar event
+    topBar.addEventListener('mousedown', () => { topBarFn.topBarOnOff(true); })
+    topBar.addEventListener('mouseup', () => { topBarFn.topBarOnOff(false); })
+    topBar.addEventListener('mousemove', (e) => { topBarFn.topBarMove(e.pageY, e); })
 
     // bottom bar event
     document.querySelector('#bottom-bar div:nth-of-type(1)').addEventListener('mousedown', () => { Apps.AppTab() });

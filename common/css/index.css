@@ -155,6 +155,7 @@ button {
 
 #top-bar {
     width: 100%;
+    min-height: 30px;
     background-color: transparent;
     font-size: 14px;
     color: #fff;
@@ -162,6 +163,13 @@ button {
     z-index: 99999;
     position: absolute;
     top: 0;
+    transition: .5s;
+}
+
+.topActive {
+    background-color: rgba(0, 0, 0, .65) !important;
+    border-radius: 10px;
+    transition: .3s;
 }
 
 #top-bar .left-box {
